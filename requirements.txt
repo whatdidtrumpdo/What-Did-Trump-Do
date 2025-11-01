@@ -1,4 +1,4 @@
-pip install Flask google-generativeai python-dotenv requests # Required packages for the project
+pip install Flask google-generativeai python-dotenv requests finhub-python mplfinance pandas # Required packages for the project
 
 # recommended to use a virtual environment so the packages 
 # do not interfere with other packages on your system

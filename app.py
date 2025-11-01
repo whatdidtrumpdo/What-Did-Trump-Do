@@ -4,7 +4,12 @@ from flask import Flask, request, jsonify # import Flask which is the web framew
 from dotenv import load_dotenv # import load_dotenv to load environment variables
 import os # import os to access environment variables
 import requests # import requests to make HTTP requests to NewsAPI
+import finhub # import finhub-python package to access Finhub API
+import pandas as pd # import pandas for data manipulation
+import time
+import mplfinance as mpf # import mplfinance for financial charting
 import google.generativeai as genai
+import json
 
 load_dotenv() # load api keys from .env file for security
 
@@ -76,7 +81,19 @@ def get_news_articles(query, lang='en', page_size=5):
         return "" # return empty string on error instead of None because gemini expects a string, otherwise gemini_analysis would crash
 
 def Finhub_charts(): # placeholder for Finhub charts function
+    finhub_client = finhub.Client(api_key=os.getenv("FINHUB_API_KEY")) # initialize Finhub client with API key
+
     pass  
+
+def get_first_stock_symbol(gemini_output):
+    try:
+        data = json.loads(gemini_output) # parse the gemini output as JSON
+        first_stock = data["stocksAffected"][0]["ticker"] # get the ticker of the first stock in the list
+        return first_stock
+    except Exception as e:
+        print(f"Error parsing Gemini output: {e}")
+        return None
+
 app = Flask(__name__) # create a Flask app instance, where to look for templates and static files
 
 @app.route('/') # when someone visits homepage do the below function
