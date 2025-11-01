@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>repl.it</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+</head>
+
+<body>
+
+  <section class='nav'>
+    <a href='index.html'>Home</a>
+    <a href='Technology.html'>Technology</a>
+    <a href='Healthcare.html'>Healthcare</a>
+    <a href='Education.html'>Education</a>
+    <a href='Overall.html'>Overall</a>
+  </section>
+
+  <!-- Moving title start  -->
+  <center>
+    <h1 class="ml5">
+      <span class="text-wrapper">
+        <span class="line line1"></span>
+        <span class="letters letters-left">TrumpPulseAI</span>
+        <span class="letters letters-right">Jennifer Tanekeu & Michelle Amoako</span>
+        <span class="line line2"></span>
+      </span>
+    </h1>
+  </center>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+  <!-- Moving title end  -->
+
+
+  <section class='header-section'>
+    <h1 class='header1'>What is Trump doing?</h1>
+    <h1 class='header1'>Technology</h1>
+  </section>
+  <h2> Hello! Welcome to our website. Trump is currently our president, and oddly our stocks have been going up and down!</h2>
+  <h2> We decided to make a website to track what Trump is doing and how it affects the stock market. </h2>
+  <h2> We hope you enjoy our website!</h2>
+
+</body>
+<body>
+    <div class=""sector-selection">
+      <button data=sector="Technology"> Technology</button></div>  
+      <button data-sector="Healthcare"> Healthcare</button></div>
+      <button data-sector="Education"> Education</button></div>
+    </div>
+    <div id="results" class"hidden"></div>
+        <h2>Analysis for <span id="selected-sector-disaplay"></span></h2>
+        <p><strong>Sentiment:</strong> <span id="sentiment"></span></p>
+            <p><strong>Short-Term Outlook:</strong> <span id="short-term"></span></p>
+            <p><strong>Long-Term Outlook:</strong> <span id="long-term"></span></p>
+            <p><strong>Affected Stocks:</strong> <span id="stocks"></span></p>
+            <h3>Financial Summary:</h3>
+            <p id="news-summary"></p>
+            <audio id="audio-player" controls autoplay></audio>
+        </div>
+    <script src="script.js"></script>
+</body>
+</html>
