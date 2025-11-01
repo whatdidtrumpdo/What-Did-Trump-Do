@@ -1,1 +1,5 @@
-APIkey.env
+# Ignore all environmental files
+.env
+
+# Ignore virtual environment
+comsPack/
