@@ -1,0 +1,1 @@
+pip inatall Flask google-generativeai python-dotenv requests # Required packages for the project
