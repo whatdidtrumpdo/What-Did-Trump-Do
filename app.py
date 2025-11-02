@@ -28,7 +28,8 @@ def get_gemini_analysis(news_articles, sector): # takes in news articles and sec
         4. 4 popular example stocks in this sector that are most likely to be affected, along with their predicted short-term movement (e.g., AAPL: Up, GOOG: Consolidate).
         5. A concise, paragraph-long summary suitable for a financial news report and retail investor.
 
-    Format your response strictly as JSON and do not include anything else but the JSON object:
+    Format your response strictly as JSON and do not include anything else but the JSON object. Be sure to use the following structure and exclude
+    the ```json and ``` markdown code block markers:
     {{
       "sentiment": "...",
       "whySentiment": "...",
@@ -51,49 +52,48 @@ def get_gemini_analysis(news_articles, sector): # takes in news articles and sec
     """
     try:
         print("=== SENDING PROMPT TO GEMINI ===")
-        print(f"Prompt length: {len(prompt)} characters")
         
         response = model.generate_content(prompt)
-        gemini_raw_text = response.text
+        gemini_raw_text = response.text # get the raw text response from gemini
         
         print("=== RAW GEMINI RESPONSE ===")
         print(gemini_raw_text)
         print("=== END RAW RESPONSE ===")
 
         # Clean the response - remove markdown code blocks
-        cleaned_text = gemini_raw_text.strip()
-        if cleaned_text.startswith('```json'):
-            cleaned_text = cleaned_text[7:]
-        if cleaned_text.startswith('```'):
-            cleaned_text = cleaned_text[3:]
-        if cleaned_text.endswith('```'):
-            cleaned_text = cleaned_text[:-3]
-        cleaned_text = cleaned_text.strip()
+        # cleaned_text = gemini_raw_text.strip()
+        # if cleaned_text.startswith('```json'):
+        #     cleaned_text = cleaned_text[7:] # remove the starting ```json, could prompt to not include it
+        # if cleaned_text.startswith('```'): 
+        #     cleaned_text = cleaned_text[3:]
+        # if cleaned_text.endswith('```'):
+        #     cleaned_text = cleaned_text[:-3]
+        # cleaned_text = cleaned_text.strip()
 
-        print("=== CLEANED RESPONSE ===")
-        print(cleaned_text)
+        # print("=== CLEANED RESPONSE ===")
+        # print(cleaned_text)
 
-        if not cleaned_text.startswith('{'):
+        if not gemini_raw_text.startswith('{'): # basic check to see if response is JSON
             print("ERROR: Response doesn't start with '{'")
             # Return a fallback response for the hackathon
             return create_fallback_response(sector)
 
-        parsed_response = json.loads(cleaned_text)
-        print("=== SUCCESSFULLY PARSED JSON ===")
-        return parsed_response
+        convert = json.loads(gemini_raw_text) # converts JSON to python dictionary, with key being the field names and values being gemini responses
+        print("=== SUCCESSFULLY CONVERTED JSON TO PYTHON DICTIONARY ===")
+        return convert
         
     except json.JSONDecodeError as e:
         print(f"JSON Decode Error: {e}")
-        print(f"Problematic text: {cleaned_text[:500]}...")
+        print(f"Problematic text: {gemini_raw_text[:500]}...")
         return create_fallback_response(sector)
     except Exception as e:
         print(f"Error calling Gemini: {e}")
         return create_fallback_response(sector) 
 
-def create_fallback_response(sector):
+def create_fallback_response(sector): # if gemini fails, return this hardcoded response
     """Fallback response when Gemini fails"""
     return {
-        "sentiment": "Neutral",
+        "sentiment": "gemini-2.5-pro",
         "whySentiment": "Mixed market signals from recent news coverage.",
         "shortTermOutlook": "Consolidate", 
         "whyShortTermOutlook": "Market digesting recent political developments.",
@@ -160,28 +160,27 @@ def analyze_sector():
         sector = "technology"
         
         news_query = f"Donald Trump AND {sector}"
-        news_articles_text = get_news_articles(news_query, page_size=10)
+        news_articles_text = get_news_articles(news_query)
 
-        if not news_articles_text:
+        if not news_articles_text: 
             return jsonify({"error": "Could not retrieve news articles for this sector."}), 500
 
         # Call get_gemini_analysis ONCE, and it returns a Python dictionary
         analysis_data = get_gemini_analysis(news_articles_text, sector)
 
-        if not analysis_data: # If get_gemini_analysis returned None
-            return jsonify({"error": "AI analysis failed or returned invalid JSON."}), 500
-
         # Return the analysis data
         response_payload = {
+            # get the values from each key in the analysis_data dictionary, default to none' or empty list if key not found
+            # usuall using .get() method to avoid KeyError common with direct indexing '[]'
             "sector": sector,
-            "sentiment": analysis_data.get('sentiment', 'N/A'),
-            "whySentiment": analysis_data.get('whySentiment', 'N/A'),
-            "shortTermOutlook": analysis_data.get('shortTermOutlook', 'N/A'),
-            "whyShortTermOutlook": analysis_data.get('whyShortTermOutlook', 'N/A'),
-            "longTermOutlook": analysis_data.get('longTermOutlook', 'N/A'),
-            "whyLongTermOutlook": analysis_data.get('whyLongTermOutlook', 'N/A'),
-            "stocksAffected": analysis_data.get('stocksAffected', []),
-            "newsSummary": analysis_data.get('newsSummary', 'No summary available.')
+            "sentiment": analysis_data.get('sentiment'), 
+            "whySentiment": analysis_data.get('whySentiment'),
+            "shortTermOutlook": analysis_data.get('shortTermOutlook'),
+            "whyShortTermOutlook": analysis_data.get('whyShortTermOutlook'),
+            "longTermOutlook": analysis_data.get('longTermOutlook'),
+            "whyLongTermOutlook": analysis_data.get('whyLongTermOutlook'),
+            "stocksAffected": analysis_data.get('stocksAffected'),
+            "newsSummary": analysis_data.get('newsSummary')
         }
         return jsonify(response_payload), 200
         
