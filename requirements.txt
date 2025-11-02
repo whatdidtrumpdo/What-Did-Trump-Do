@@ -5,4 +5,5 @@ requests
 # finhub-python, not needed rn
 mplfinance
 pandas
+gunicorn
 # on render, each line must be a package name
