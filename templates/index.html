@@ -34,7 +34,7 @@
         .section {
             margin: 20px 0;
             padding: 15px;
-            border-left: 4px solid #2e07b9;
+            border-left: 4px solid #00F0FF;
             background-color: #000000; 
             /* changed from white to dark for better contrast */
         }
@@ -54,6 +54,8 @@
         .up { color: green; font-weight: bold; }
         .down { color: red; font-weight: bold; }
         .consolidate { color: orange; font-weight: bold; }
+        .bearish {color: red; font-weight: bold; }
+        .bullish {color: green; font-weight:bold: }
         .error {
             color: red;
             background: #ffe6e6;
@@ -68,11 +70,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>🚀 What Did Trump Do - Tech Sector Analysis</h1>
+        <h1> What Did Trump Do - Tech Sector Analysis</h1>
         <p>Tracking Trump's impact on technology stocks</p>
         
         <div id="loading" class="loading">
-            <p>📡 Fetching latest news and AI analysis...</p>
+            <p> Fetching latest news and AI analysis...</p>
         </div>
         
         <div id="results" class="results" style="display: none;">
@@ -139,22 +141,22 @@
 
             resultsDiv.innerHTML = `
                 <div class="section">
-                    <h2>📊 Overall Sentiment: <span class="${getMovementClass(data.sentiment)}">${data.sentiment}</span></h2>
+                    <h2> Overall Sentiment: <span class="${getMovementClass(data.sentiment)}">${data.sentiment}</span></h2>
                     <p>${data.whySentiment}</p>
                 </div>
 
                 <div class="section">
-                    <h3>⏰ Short-Term Outlook: <span class="${getMovementClass(data.shortTermOutlook)}">${data.shortTermOutlook}</span></h3>
+                    <h3> Short-Term Outlook: <span class="${getMovementClass(data.shortTermOutlook)}">${data.shortTermOutlook}</span></h3>
                     <p>${data.whyShortTermOutlook}</p>
                 </div>
 
                 <div class="section">
-                    <h3>📈 Long-Term Outlook: <span class="${getMovementClass(data.longTermOutlook)}">${data.longTermOutlook}</span></h3>
+                    <h3> Long-Term Outlook: <span class="${getMovementClass(data.longTermOutlook)}">${data.longTermOutlook}</span></h3>
                     <p>${data.whyLongTermOutlook}</p>
                 </div>
 
                 <div class="section">
-                    <h3>💼 Stocks to Watch</h3>
+                    <h3> Stocks to Watch</h3>
                     <div class="stock-list">
                         ${data.stocksAffected.map(stock => `
                             <div class="stock-item">
@@ -166,7 +168,7 @@
                 </div>
 
                 <div class="section">
-                    <h3>📰 AI News Summary</h3>
+                    <h3> AI News Summary</h3>
                     <p>${data.newsSummary}</p>
                 </div>
             `;
