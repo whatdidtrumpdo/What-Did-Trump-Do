@@ -1,7 +1,7 @@
 # main Flask app file
 
 from flask import Flask, request, jsonify, render_template # import Flask which is the web framework
-import flask_cors import CORS
+from flask_cors import CORS
 from dotenv import load_dotenv # import load_dotenv to load environment variables
 import os # import os to access environment variables
 import requests # import requests to make HTTP requests to NewsAPI
@@ -149,6 +149,7 @@ def get_news_articles(query, lang='en', page_size=5):
 #         return None
 
 app = Flask(__name__, static_folder='static', template_folder-'templates') # create a Flask app instance, where to look for templates and static files
+CORS(app)
 
 @app.route('/')  # displays home page at root URL ('index.html')
 def home():
