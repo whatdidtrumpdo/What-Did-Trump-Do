@@ -6,4 +6,5 @@ requests
 mplfinance
 pandas
 gunicorn
+flask_cors
 # on render, each line must be a package name
