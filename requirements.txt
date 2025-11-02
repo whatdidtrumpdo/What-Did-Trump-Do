@@ -2,7 +2,7 @@ Flask
 google-generativeai
 python-dotenv
 requests
-finhub-python
+# finhub-python, not needed rn
 mplfinance
 pandas
 # on render, each line must be a package name
