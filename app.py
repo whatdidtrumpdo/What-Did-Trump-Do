@@ -15,7 +15,7 @@ import json
 load_dotenv() # load api keys from .env file for security
 
 genai.configure(api_key=os.getenv("GENAI_API_KEY")) # what this does it set the API key for gemini so that we can make requests to the API
-model = genai.GenerativeModel('gemini-2.5-pro') # specify the model version to use
+model = genai.GenerativeModel('gemini-2.5-flash') # specify the model version to use
 
 
 def get_gemini_analysis(news_articles, sector): # takes in news articles and sector as input, might change to take only 1 article later
