@@ -1,0 +1,17 @@
+# _config.yml file used to define gloal setting for entire site
+
+title: 🚀 What Did Trump Do - Tech Sector Analysis
+description: Tracking Trump's impact on technology stocks
+# baseurl: , what do it place here?
+url: https://whatdiditrumpdo.tech # custom domain
+
+# Build settings
+
+theme: null # not needed, everything customized
+plugins: 
+  - jekyll-seo-tags # rtisec uses jekyll-seo-tags, deepseek reccomended jekyll-feed(but its not a blog)
+permalink: /:title # the slug of each pages url will be the pages tite: https://wicys.com/e-board
+
+ 
+
+
